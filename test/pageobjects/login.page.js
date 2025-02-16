@@ -1,13 +1,9 @@
 const { $, expect } = require('@wdio/globals')
 const Page = require('./page');
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
+
 class loginPage extends Page {
-    /**
-     * define selectors using getter methods
-     */
+
     get menuDeCategorias () {
         return $('//a[contains(text(),"Categorías")]/parent::li');
     }
@@ -20,12 +16,26 @@ class loginPage extends Page {
         return $('[href="https://www.mercadolibre.com.mx/ofertas/supermercado#menu=categories"]');
     }
 
-    /**
-     * a method to encapsule automation code to interact with the page
-     * e.g. to login using username and password
-     */
+    get menuDeTecnologíaInternoEnCategorias () {
+        return $('//a[contains(text(),"Tecnología")]/parent::li');
+    }
+
+    get videoJuegosDeSubmenuTecnologia () {
+        return $('//a[contains(text(),"Videojuegos")]/parent::li');
+    }
+
     async desplegarMenuDeCategorias () {
         await this.menuDeCategorias.moveTo();
+        await browser.pause(2000);
+    }
+
+    async desplegarMenuDeTecnología () {
+        await this.menuDeTecnologíaInternoEnCategorias.moveTo();
+        await browser.pause(2000);
+    }
+
+    async hacerClickEnVideoJuegos () {
+        await this.videoJuegosDeSubmenuTecnologia.click();
         await browser.pause(2000);
     }
 
@@ -33,9 +43,6 @@ class loginPage extends Page {
         
     }
 
-    /**
-     * overwrite specific options to adapt it to page object
-     */
     open () {
         return super.open();
     }
