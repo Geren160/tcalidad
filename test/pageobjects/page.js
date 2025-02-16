@@ -9,7 +9,7 @@ module.exports = class Page {
     * Opens a sub page of the page
     */
     open () {
-        //return browser.url(`https://www.mercadolibre.com.mx/`)
-        return browser.url(`https://store.steampowered.com/?l=english`)
+        return browser.url(`https://www.mercadolibre.com.mx/`)
+        // return browser.url(`https://store.steampowered.com/?l=english`)
     }
 }
