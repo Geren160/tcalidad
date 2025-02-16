@@ -1,41 +1,44 @@
-const { $ } = require('@wdio/globals')
+const { $, expect } = require('@wdio/globals')
 const Page = require('./page');
 
 /**
  * sub page containing specific selectors and methods for a specific page
  */
-class LoginPage extends Page {
+class loginPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get inputUsername () {
-        return $('#username');
+    get menuDeCategorias () {
+        return $('//a[contains(text(),"Categorías")]/parent::li');
     }
 
-    get inputPassword () {
-        return $('#password');
+    get menuDeVehiculosInternoEnCategorias () {
+        return $('//a[text()="Vehículos"]');
     }
 
-    get btnSubmit () {
-        return $('button[type="submit"]');
+    get menuDeSupermercadoInternoEnCategorias () {
+        return $('[href="https://www.mercadolibre.com.mx/ofertas/supermercado#menu=categories"]');
     }
 
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
-    async login (username, password) {
-        await this.inputUsername.setValue(username);
-        await this.inputPassword.setValue(password);
-        await this.btnSubmit.click();
+    async desplegarMenuDeCategorias () {
+        await this.menuDeCategorias.moveTo();
+        await browser.pause(2000);
+    }
+
+    async esperar(milisegundos) {
+        
     }
 
     /**
      * overwrite specific options to adapt it to page object
      */
     open () {
-        return super.open('login');
+        return super.open();
     }
 }
 
-module.exports = new LoginPage();
+module.exports = new loginPage();
