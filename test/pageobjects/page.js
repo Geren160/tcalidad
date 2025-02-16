@@ -10,6 +10,6 @@ module.exports = class Page {
     */
     open () {
         //return browser.url(`https://www.mercadolibre.com.mx/`)
-        return browser.url(`https://store.steampowered.com/`)
+        return browser.url(`https://store.steampowered.com/?l=english`)
     }
 }

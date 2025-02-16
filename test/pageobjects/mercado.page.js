@@ -2,7 +2,7 @@ const { $, expect } = require('@wdio/globals')
 const Page = require('./page');
 
 
-class loginPage extends Page {
+class mercadoPage extends Page {
 
     get menuDeCategorias () {
         return $('//a[contains(text(),"Categorías")]/parent::li');
@@ -48,4 +48,4 @@ class loginPage extends Page {
     }
 }
 
-module.exports = new loginPage();
+module.exports = new mercadoPage();

@@ -33,6 +33,20 @@ class steamPage extends Page {
         return $('/html/body/div[3]/dialog/div/div[2]/div/div[3]/div/div[1]');
     }
     
+    async revisarCarrito() {
+        const revisarCarrito = await $('/html/body/div[3]/dialog/div/div[2]/div/div[3]/div/div[3]/button[1]');
+        await revisarCarrito.waitForDisplayed();
+        await revisarCarrito.click();
+        await browser.pause(2000);
+    }
+
+    async verificarNotificacionCarrito() {
+        const notificacionCarrito = await $('/html/body/div[1]/div[7]/div[6]/div[3]/div[1]/div/div/div[1]/div/div/div/a');
+        await notificacionCarrito.waitForDisplayed();
+        await notificacionCarrito.click();
+        await browser.pause(2000);
+    }
+
     async esperar(milisegundos) {
         await browser.pause(milisegundos);
     }
