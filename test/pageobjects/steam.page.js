@@ -1,5 +1,6 @@
 const { $, expect } = require('@wdio/globals')
 const Page = require('./page');
+const { elementToBeClickable } = require('wdio-wait-for');
 
 class steamPage extends Page {
 
@@ -8,14 +9,12 @@ class steamPage extends Page {
         await inputBusqueda.waitForDisplayed();
         await inputBusqueda.setValue('Undertale');
         await browser.keys('Enter');
-        await browser.pause(2000);
     }
 
     async seleccionarJuego() {
         const seleccionarJuego = await $('//*[@id="search_resultsRows"]/a[1]/div[2]/div[1]/span'); //seleccionar juego en los resultados
         await seleccionarJuego.waitForDisplayed();
         await seleccionarJuego.click();
-        await browser.pause(2000);
     }
 
     get verificarJuego() {
@@ -26,7 +25,6 @@ class steamPage extends Page {
         const agregarAlCarrito = await $('//*[@id="btn_add_to_cart_74780"]/span'); //Boton agregar al carrito
         await agregarAlCarrito.waitForDisplayed();
         await agregarAlCarrito.click();
-        await browser.pause(2000);
     }
 
     get verificarCompra() {
@@ -40,7 +38,6 @@ class steamPage extends Page {
         const revisarCarrito = await $('//*[@id="cart_status_data"]/div/div/a'); //Le da clic en el carro
         await revisarCarrito.waitForDisplayed();
         await revisarCarrito.click();
-        await browser.pause(2000);
     }
 
     get verificarIconoCarrito() {
@@ -51,7 +48,6 @@ class steamPage extends Page {
         const eliminarDelCarrito = await $('//*[@id="page_root"]/div[2]/div/div[2]/div[3]/div[1]/div[3]/div[2]'); //Hace clic en eliminar todos los articulos
         await eliminarDelCarrito.waitForDisplayed();
         await eliminarDelCarrito.click();
-        await browser.pause(2000);
     }
 
     get verificarEliminacion() {
@@ -76,21 +72,49 @@ class steamPage extends Page {
 
     async clickEnFreeToPlay() {
         await this.menuDeCategorias.moveTo();
+        await this.menuDeCategorias.waitForDisplayed();
         await this.freeToPlay.click();
     }
 
     async verificarJuegoFreeToPlay() {
         await this.juegoFreeToPlay.click();
-        await browser.pause(2000);
     }
 
     async verificarJuegoFreeToPlay2() {
         await this.juegoFreeToPlay2.click();
-        await browser.pause(2000);
     }
 
     get verificarInfoJuego() {
         return $('//*[@id="game_area_purchase"]/div[1]/div[2]/div/div[1]'); //Conseguir la ubicacion de la descripcion del juego y diga Free to Play
+    }
+
+    get reseñasFilter() {
+        return $('//*[@id="reviews_filter_options"]/div[6]/div[1]'); //Conseguir la ubicacion de los filtros de las reseñas
+    }
+
+    get reseñasHelpful() {
+        return $('//*[@id="reviews_filter_options"]/div[6]/div[2]/div/label[2]'); //Conseguir la ubicacion de las reseñas que son de ayuda
+    }
+
+    get reseña () {
+        return $('//*[@id="ReviewContentall185985713_rightcol"]/a/div[2]'); //Conseguir la ubicacion de la reseña
+    }
+    
+    async revisarReseñas() {
+        await this.reseñasFilter.click();
+        await this.reseñasFilter.waitForDisplayed();
+        await this.reseñasHelpful.click();
+        await this.reseña.moveTo();
+        await this.reseña.click();
+        await this.esperar(5000);
+    }
+
+    get isHealpful() {
+        return $('//*[@id="leftContents"]/div[2]/text()[1]'); //Conseguir la ubicacion dentro del comentario para verificar si es de ayuda
+    }
+
+    get recomended() {
+        return $('//*[@id="ReviewTitle"]/div[1]/div[1]'); //conseguir la ubicacion del titulo "recommended" en el comentario
     }
 
         async esperar(milisegundos) {

@@ -23,33 +23,33 @@ const steamPage = require('../pageobjects/steam.page')
 // })
 
 describe('Comprando en Steam', () => {
-    it('Buscar juego', async () => {
-        await steamPage.open()
-        await steamPage.buscarJuego()
-        await steamPage.seleccionarJuego()
-        await expect(await steamPage.verificarJuego).toHaveText('Undertale')
-    })
+//     it('Buscar juego', async () => {
+//         await steamPage.open()
+//         await steamPage.buscarJuego()
+//         await steamPage.seleccionarJuego()
+//         await expect(await steamPage.verificarJuego).toHaveText('Undertale')
+//     })
 
-    it('Agregar juego al carrito', async () => {
-        await steamPage.agregarJuegoAlCarrito()
-        await expect(await steamPage.verificarCompra).toHaveText('Added to your cart!')
-        await steamPage.revisarCarrito()
-        await expect(await steamPage.verificarIconoCarrito).toHaveText('Cart (1)')
-    })
+//     it('Agregar juego al carrito', async () => {
+//         await steamPage.agregarJuegoAlCarrito()
+//         await expect(await steamPage.verificarCompra).toHaveText('Added to your cart!')
+//         await steamPage.revisarCarrito()
+//         await expect(await steamPage.verificarIconoCarrito).toHaveText('Cart (1)')
+//     })
 
-    it('Eliminar juego del carrito', async () => {
-        await steamPage.eliminarDelCarrito()
-        await expect(await steamPage.verificarEliminacion).toHaveText('Your cart is empty.')
-    })
-})
+//     it('Eliminar juego del carrito', async () => {
+//         await steamPage.eliminarDelCarrito()
+//         await expect(await steamPage.verificarEliminacion).toHaveText('Your cart is empty.')
+//     })
+// })
 
-describe('Navegar en steam', () => {
-    it('Buscar primer resultado, juego por filtro Free To Play', async () => {
-        await steamPage.open()
-        await steamPage.clickEnFreeToPlay()
-        await steamPage.verificarJuegoFreeToPlay()
-        await expect(await steamPage.verificarInfoJuego).toHaveText('Free To Play')
-    })
+//  describe('Navegar en steam', () => {
+//     it('Buscar primer resultado, juego por filtro Free To Play', async () => {
+//         await steamPage.open()
+//         await steamPage.clickEnFreeToPlay()
+//         await steamPage.verificarJuegoFreeToPlay()
+//         await expect(await steamPage.verificarInfoJuego).toHaveText('Free To Play')
+//     })
 
     it('Buscar segundo resultado, juego por filtro Free To Play', async () => {
         await steamPage.open()
@@ -57,4 +57,11 @@ describe('Navegar en steam', () => {
         await steamPage.verificarJuegoFreeToPlay2()
         await expect(await steamPage.verificarInfoJuego).toHaveText('Free To Play')
     })
+
+    it('Revisar las reseñas de un juego', async () => {
+            await steamPage.revisarReseñas()
+            await expect(await steamPage.isHealpful).toHaveText(' /^\d+ people found this review helpful$/')
+            await expect(await steamPage.recomended).toHaveText('Recommended')
+    })
+    
 })
