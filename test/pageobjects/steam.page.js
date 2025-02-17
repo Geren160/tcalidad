@@ -57,7 +57,42 @@ class steamPage extends Page {
     get verificarEliminacion() {
         return $('//*[@id="page_root"]/div[2]/div/div[2]/div[3]/div[1]/div[1]/div/div'); //Debe aparecer el mensaje de que no hay articulos en el carrito
     }
-   
+
+    get menuDeCategorias() {
+        return $('//*[@id="genre_tab"]/span/a[1]'); //Se consigue la ubicacion del menu de categorias
+    }
+
+    get freeToPlay() {
+        return $('//*[@id="genre_flyout"]/div/div[1]/a[1]'); //Conseguir la ubicacion del elemento filtro Free to Play
+    }
+
+    get juegoFreeToPlay() {
+        return $('//*[@id="SaleSection_93094"]/div/div[2]/div[1]/div[1]/div/div/div/a/div/div/div[2]/img'); //Conseguir la ubicacion del juego Free to Play
+    } 
+
+    get juegoFreeToPlay2() {
+        return $('//*[@id="SaleSection_93094"]/div/div[2]/div[1]/div[2]/div/div/div/a/div/div/div[2]/img'); //Conseguir una segunda ubicacion del juego free to play
+    }
+
+    async clickEnFreeToPlay() {
+        await this.menuDeCategorias.moveTo();
+        await this.freeToPlay.click();
+    }
+
+    async verificarJuegoFreeToPlay() {
+        await this.juegoFreeToPlay.click();
+        await browser.pause(2000);
+    }
+
+    async verificarJuegoFreeToPlay2() {
+        await this.juegoFreeToPlay2.click();
+        await browser.pause(2000);
+    }
+
+    get verificarInfoJuego() {
+        return $('//*[@id="game_area_purchase"]/div[1]/div[2]/div/div[1]'); //Conseguir la ubicacion de la descripcion del juego y diga Free to Play
+    }
+
         async esperar(milisegundos) {
         await browser.pause(milisegundos);
     }

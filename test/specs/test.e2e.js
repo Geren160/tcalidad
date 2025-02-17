@@ -42,3 +42,19 @@ describe('Comprando en Steam', () => {
         await expect(await steamPage.verificarEliminacion).toHaveText('Your cart is empty.')
     })
 })
+
+describe('Navegar en steam', () => {
+    it('Buscar primer resultado, juego por filtro Free To Play', async () => {
+        await steamPage.open()
+        await steamPage.clickEnFreeToPlay()
+        await steamPage.verificarJuegoFreeToPlay()
+        await expect(await steamPage.verificarInfoJuego).toHaveText('Free To Play')
+    })
+
+    it('Buscar segundo resultado, juego por filtro Free To Play', async () => {
+        await steamPage.open()
+        await steamPage.clickEnFreeToPlay()
+        await steamPage.verificarJuegoFreeToPlay2()
+        await expect(await steamPage.verificarInfoJuego).toHaveText('Free To Play')
+    })
+})
