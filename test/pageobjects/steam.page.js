@@ -1,13 +1,20 @@
-const { $, expect } = require('@wdio/globals')
-const Page = require('./page');
+const { $, expect, browser } = require('@wdio/globals')
+const PageSteam = require('./page.Steam');
 const { elementToBeClickable } = require('wdio-wait-for');
 
-class steamPage extends Page {
+class steamPage extends PageSteam {
 
     async buscarJuego() {
         const inputBusqueda = await $('//*[@id="store_nav_search_term"]'); //input de busqueda
         await inputBusqueda.waitForDisplayed();
         await inputBusqueda.setValue('Undertale');
+        await browser.keys('Enter');
+    }
+
+    async buscarJuegoParaVerificarMayoriaDeEdad() {
+        const inputBusqueda = await $('//*[@id="store_nav_search_term"]'); //input de busqueda
+        await inputBusqueda.waitForDisplayed();
+        await inputBusqueda.setValue('Baldurs gate 3');
         await browser.keys('Enter');
     }
 
@@ -97,33 +104,138 @@ class steamPage extends Page {
     }
 
     get reseña () {
-        return $('//*[@id="ReviewContentall185985713_rightcol"]/a/div[2]'); //Conseguir la ubicacion de la reseña
+        return $('//*[@id="ReviewContentall186550694_rightcol"]'); //Conseguir la ubicacion de la reseña
     }
     
     async revisarReseñas() {
         await this.reseñasFilter.click();
         await this.reseñasFilter.waitForDisplayed();
         await this.reseñasHelpful.click();
+        await this.reseñasFilter.scrollIntoView(); //Hacer scroll para ver las reseñas
         await this.reseña.moveTo();
-        await this.reseña.click();
-        await this.esperar(5000);
     }
 
     get isHealpful() {
-        return $('//*[@id="leftContents"]/div[2]/text()[1]'); //Conseguir la ubicacion dentro del comentario para verificar si es de ayuda
+        return $('//*[@id="ReviewContentall186550694_rightcol"]/div[7]'); //Conseguir la ubicacion dentro del comentario para verificar si es de ayuda
     }
 
+    // async verificarEsDeAyuda() {
+    //     const elementoHealpful = await this.isHealpful;
+    //     const texto = await elementoHealpful.getText(); //Conseguir el texto del elemento
+    //     const partes = texto.split('.'); //Separar el texto en partes
+    //     return partes.some(parte => parte.includes(' /^\d+ people found this review helpful$/')); //Verificar si alguna parte del texto contiene la frase
+    // }
+
     get recomended() {
-        return $('//*[@id="ReviewTitle"]/div[1]/div[1]'); //conseguir la ubicacion del titulo "recommended" en el comentario
+        return $('//*[@id="ReviewContentall186550694_rightcol"]/a/div[2]'); //conseguir la ubicacion del titulo "recommended" en el comentario
     }
 
         async esperar(milisegundos) {
         await browser.pause(milisegundos);
     }
 
+    get filtroDeControllerFriendly() {
+        return $('//*[@id="genre_flyout"]/div/div[1]/a[6]/span'); //Conseguir la ubicacion del filtro de controller friendly
+    }
+
+    get filtroDeControlXbox() {
+        return $('//*[@id="SaleSection_183771"]/div/div[2]/div[1]/div[2]'); //Conseguir la ubicacion del filtro de control de xbox
+    }
+
+    get juegoConFiltroControlXbox() {
+        return $('//*[@id="SaleSection_93094"]/div/div[2]/div[1]/div[1]/div/div/div/a/div/div/div[2]/img'); //Conseguir la ubicacion del juego con filtro de control de xbox
+    }
+
+    async clickEnFiltroDeControllerFriendly() {
+        await this.menuDeCategorias.moveTo();
+        await this.menuDeCategorias.waitForDisplayed();
+        await this.filtroDeControllerFriendly.click();
+    }
+
+    async seleccionarFiltroControlXbox() {
+        await this.filtroDeControlXbox.scrollIntoView();
+        await this.filtroDeControlXbox.click();
+    }
+
+    async seleccionarJuegoConFiltroControlXbox() {
+        await this.juegoConFiltroControlXbox.click();
+        await browser.pause(2000);
+    }
+
+    get comprobarJuegoConControlXbox() {
+        return $('//*[@id="category_block"]/div[2]/div/a[1]/div[2]/div') //Conseguir la ubicacion del elemento que dice que se puede jugar con control de xbox
+    }
+
+    get verificacionMayorDeEdad() {
+        return $('//*[@id="app_agegate"]/div[1]/div[2]/div'); //Conseguir la ubicacion del input de la edad
+    }
+
+    get elementoGiftCard() {
+        return $('//*[@id="responsive_page_template_content"]/div[3]/div[1]/div/div[1]/a/div[1]/img'); //Conseguir la ubicacion del elemento de gift card
+    }
+
+    get addFundsToMyWallet() {
+        return $('//*[@id="responsive_page_template_content"]/div[4]/div/div[4]/div[2]/div[5]/a[2]/span'); //Conseguir la ubicacion del boton de agregar fondos a la cartera
+    }
+
+    get add60ToMyWallet() {
+        return $('//*[@id="prices_user"]/div[1]/div/div/a/span'); //Conseguir la ubicacion del boton de agregar $60mx a la cartera
+    }
+
+    get add120ToMyWallet() {
+        return $('//*[@id="prices_user"]/div[2]/div/div/a/span'); //Conseguir la ubicacion del boton de agregar $60mx a la cartera
+    }
+
+    get add300ToMyWallet() {
+        return $('//*[@id="prices_user"]/div[3]/div/div/a/span'); //Conseguir la ubicacion del boton de agregar $60mx a la cartera
+    }
+
+    get add600ToMyWallet() {
+        return $('//*[@id="prices_user"]/div[4]/div/div/a/span'); //Conseguir la ubicacion del boton de agregar $60mx a la cartera
+    }
+
+    get add1200ToMyWallet() {
+        return $('//*[@id="prices_user"]/div[5]/div/div/a/span'); //Conseguir la ubicacion del boton de agregar $60mx a la cartera
+    }
+
+    get verificacionInicioDeSesion() {
+        return $('//*[@id="responsive_page_template_content"]/div[3]/div[2]/div/div/div/div[1]/div'); //Conseguir la ubicacion del boton de inicio de sesion
+    }
+
+    async abirGiftCards60() {
+        await this.elementoGiftCard.click();
+        await this.addFundsToMyWallet.click();
+        await this.add60ToMyWallet.click();
+    }
+
+    async abirGiftCards120() {
+        await this.elementoGiftCard.click();
+        await this.addFundsToMyWallet.click();
+        await this.add120ToMyWallet.click();
+    }
+
+    async abirGiftCards300() {
+        await this.elementoGiftCard.click();
+        await this.addFundsToMyWallet.click();
+        await this.add300ToMyWallet.click();
+    }
+
+    async abirGiftCards600() {
+        await this.elementoGiftCard.click();
+        await this.addFundsToMyWallet.click();
+        await this.add600ToMyWallet.click();
+    }
+
+    async abirGiftCards1200() {
+        await this.elementoGiftCard.click();
+        await this.addFundsToMyWallet.click();
+        await this.add1200ToMyWallet.click();
+    }
+
     open () {
         return super.open();
     }
+
 
 }
 module.exports = new steamPage();

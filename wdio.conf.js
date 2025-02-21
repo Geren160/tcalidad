@@ -5,6 +5,10 @@ exports.config = {
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
+    before: function (capabilities, specs) {
+        // Maximizar la ventana antes de ejecutar cada prueba
+        browser.maximizeWindow();
+      },
     //
     // ==================
     // Specify Test Files

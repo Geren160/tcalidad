@@ -1,8 +1,8 @@
 const { $, expect } = require('@wdio/globals')
-const Page = require('./page');
+const PageMercado = require('./page.Mercado');
 
 
-class mercadoPage extends Page {
+class mercadoPage extends PageMercado {
 
     get menuDeCategorias () {
         return $('//a[contains(text(),"Categorías")]/parent::li');
