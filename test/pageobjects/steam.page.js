@@ -232,6 +232,81 @@ class steamPage extends PageSteam {
         await this.add1200ToMyWallet.click();
     }
 
+    get ingresarFecha() {
+        return $('//*[@id="ageYear"]'); //Conseguir la ubicacion del input de la fecha
+    }
+
+    get verPagina() {
+        return $('//*[@id="view_product_page_btn"]/span'); //Conseguir la ubicacion del input de la fecha
+    }
+
+    get contenidoPaginaMayorDeEdad() {
+        return $('//*[@id="appHubAppName"]')
+    }
+
+    get errorNoAutorizado() {
+        return $('/html/body/div[4]/div[3]/div/div[1]')
+    }
+
+    get opcionDeEdad() {
+        return $('//*[@id="ageYear"]/option[106]'); //Conseguir la ubicacion de la opcion de la fecha 2005
+    }
+
+    async ingresarFechaDeNacimientoMenor() {
+        await this.ingresarFecha.waitForDisplayed();
+        await this.ingresarFecha.click();
+        await browser.keys('2015');
+        await browser.keys('Enter');
+        await this.verPagina.click();
+    }
+
+    get volverVerificacionDeEdad(){
+        return $('//*[@id="agegate_box"]/p/a[2]/span')
+    }
+
+    async ingresarFechaDeNacimientoMayor() {
+        await this.volverVerificacionDeEdad.moveTo();
+        await this.volverVerificacionDeEdad.click();
+        await this.ingresarFecha.waitForDisplayed();
+        await this.ingresarFecha.click();
+        await browser.keys('1999');
+        await browser.keys('Enter');
+        await this.verPagina.click();
+        await browser.pause(2000);
+    }
+
+    get inicioSesion(){
+        return $('//*[@id="global_action_menu"]/a[2]')
+    }
+
+    async ingresaConCuentaValida(){
+        await this.inicioSesion.click();
+        await browser.pause(2000)
+        await browser.keys('cuentaejemplo16');
+        await browser.keys('Tab')
+        await browser.keys('Wh^qCGC3*JwFh8W')
+        await browser.keys('Enter');
+        await browser.pause(2000)
+    }
+
+    get verificacionEmail(){
+        return $('//*[@id="responsive_page_template_content"]/div[3]/div[1]/div/div/div/div[2]/form/div/div[1]/div[2]')
+    }
+
+    async ingresaConCuentaInvalida(){
+        await this.inicioSesion.click();
+        await browser.pause(2000)
+        await browser.keys('cuentaejemplo16a');
+        await browser.keys('Tab')
+        await browser.keys('Wh^qCGC3*JwFh8Wsas')
+        await browser.keys('Enter');
+        await browser.pause(2000)
+    }
+
+    get errorDeAutenticacion() {
+        return $('//*[@id="responsive_page_template_content"]/div[3]/div[1]/div/div/div/div[2]/div/form/div[5]')
+    }
+
     open () {
         return super.open();
     }
